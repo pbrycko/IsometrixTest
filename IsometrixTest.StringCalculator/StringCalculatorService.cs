@@ -32,7 +32,7 @@ namespace IsometrixTest.StringCalculator
             if (expression.StartsWith("//"))
                 expression = expression.Substring(expression.IndexOf('\n') + 1);
 
-            IEnumerable<int> numbers = expression.Split(delimeters).Select(num => Convert.ToInt32(num));
+            IEnumerable<int> numbers = expression.Split(delimeters).Select(num => Convert.ToInt32(num)).Where(num => num <= 1000);
             IEnumerable<int> negatives = numbers.Where(num => num < 0);
             if (negatives.Any())
                 throw new NegativesNotAllowedException(negatives);
