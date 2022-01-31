@@ -21,13 +21,19 @@ namespace IsometrixTest.StringCalculator
             if (!expression.StartsWith("//"))
                 return new string[] { ",", "\n" };
             string delimetersText = expression.Substring(2, expression.IndexOf('\n') - 2);
-            Match longDelimeterMatch = Regex.Match(delimetersText, @"^\[([^\[\]]+)\]$");
-            if (longDelimeterMatch.Success)
+            MatchCollection longDelimeterMatches = Regex.Matches(delimetersText, @"\[([^\[\]]+)\]");
+            if (longDelimeterMatches.Any())
             {
-                string delimeterValue = longDelimeterMatch.Groups[1].Value;
-                if (string.IsNullOrEmpty(delimeterValue))
-                    throw new ArgumentException("Empty brackets delimeter is invalid");
-                return new string[] { delimeterValue, "\n" };
+                string[] delimeters = new string[longDelimeterMatches.Count() + 1];
+                for (int i = 0; i < longDelimeterMatches.Count; i++)
+                {
+                    string delimeterValue = longDelimeterMatches[i].Groups[1].Value;
+                    if (string.IsNullOrEmpty(delimeterValue))
+                        throw new ArgumentException("Empty brackets delimeter is invalid");
+                    delimeters[i] = delimeterValue;
+                }
+                delimeters[delimeters.Length - 1] = "\n";
+                return delimeters;
             }
             if (delimetersText.Length > 1)
                 throw new ArgumentException("Non-bracket delimeter cannot have more than 1 character", nameof(expression));
