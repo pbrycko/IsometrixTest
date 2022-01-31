@@ -96,9 +96,20 @@ namespace IsometrixTest.StringCalculator.Tests
         }
 
         [Test]
-        [TestCase("2,1000", 2)]
+        [TestCase("2,1001", 2)]
         [TestCase("2,3,12345", 5)]
         public void Step6_IgnoreBiggerThan1000(string expression, int expectedResult)
+        {
+            int result;
+
+            result = this._calculator.Add(expression);
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        [TestCase("2,1000", 1002)]
+        public void Step6_AllowUpTo100Inclusive(string expression, int expectedResult)
         {
             int result;
 
