@@ -6,19 +6,33 @@ namespace IsometrixTest.StringCalculator
 {
     public class StringCalculatorService : IStringCalculator
     {
-        private static readonly char[] _separators = new char[] { ',', '\n' };
-
         public int Add(string expression)
         {
             if (string.IsNullOrEmpty(expression))
                 return 0;
-            IEnumerable<int> numbers = this.GetNumbers(expression);
+            char[] delimeters = this.GetDelimeters(expression);
+            IEnumerable<int> numbers = this.GetNumbers(expression, delimeters);
             return numbers.Sum();
         }
 
-        private IEnumerable<int> GetNumbers(string expression)
+        private char[] GetDelimeters(string expression)
         {
-            string[] numbers = expression.Split(_separators);
+            if (!expression.StartsWith("//"))
+                return new char[] { ',', '\n' };
+            string delimetersText = expression.Substring(2, expression.IndexOf('\n') - 2);
+            char[] delimeters = new char[delimetersText.Length + 1];
+            for (int i = 0; i < delimetersText.Length; i++)
+                delimeters[i] = delimetersText[i];
+            delimeters[delimeters.Length - 1] = '\n';
+            return delimeters;
+        }
+
+        private IEnumerable<int> GetNumbers(string expression, char[] delimeters)
+        {
+            if (expression.StartsWith("//"))
+                expression = expression.Substring(expression.IndexOf('\n') + 1);
+
+            string[] numbers = expression.Split(delimeters);
             return numbers.Select(num => Convert.ToInt32(num));
         }
     }
