@@ -30,14 +30,14 @@ namespace IsometrixTest.StringCalculator.Tests
         [TestCase("//foo\n1foo7foo2")]
         public void Step1_NoSquareBracket_Throws(string expression)
         {
-            Assert.Throws<Exception>(() => this._calculator.Add(expression));
+            Assert.Throws<ArgumentException>(() => this._calculator.Add(expression));
         }
 
         [Test]
         [TestCase("//[]\n1***2***3")]
         public void Step1_SquareBracket_Invalid(string expression)
         {
-            Assert.Throws<Exception>(() => this._calculator.Add(expression));
+            Assert.Throws<ArgumentException>(() => this._calculator.Add(expression));
         }
 
         [Test]
