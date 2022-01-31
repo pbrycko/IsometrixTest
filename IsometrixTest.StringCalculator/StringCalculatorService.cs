@@ -6,6 +6,8 @@ namespace IsometrixTest.StringCalculator
 {
     public class StringCalculatorService : IStringCalculator
     {
+        private static readonly char[] _separators = new char[] { ',', '\n' };
+
         public int Add(string expression)
         {
             if (string.IsNullOrEmpty(expression))
@@ -16,7 +18,7 @@ namespace IsometrixTest.StringCalculator
 
         private IEnumerable<int> GetNumbers(string expression)
         {
-            string[] numbers = expression.Split(',');
+            string[] numbers = expression.Split(_separators);
             return numbers.Select(num => Convert.ToInt32(num));
         }
     }
