@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsometrixTest.StringCalcula
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsometrixTest.LinkedList", "IsometrixTest.LinkedList\IsometrixTest.LinkedList.csproj", "{DA3BA189-297F-47FF-820B-4DDBFCAD425D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DesignPatterns", "DesignPatterns", "{E407A8FF-6713-4638-9B78-56D6AF7C7857}"
+	ProjectSection(SolutionItems) = preProject
+		IsometrixTest.DesignPatterns\DesignPatterns.md = IsometrixTest.DesignPatterns\DesignPatterns.md
+		C:\Users\GM\Documents\Lightshot\SubscriberPublisherDiagram.png = C:\Users\GM\Documents\Lightshot\SubscriberPublisherDiagram.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
