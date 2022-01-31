@@ -1,15 +1,31 @@
+using IsometrixTest.StringCalculator.Services;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using System;
 
 namespace IsometrixTest.StringCalculator.Tests
 {
     public class MainRequirements
     {
+        private IServiceProvider _services;
         private IStringCalculator _calculator;
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IStringCalculator, StringCalculatorService>();
+            serviceCollection.AddTransient<INumbersParser, NumbersParserService>();
+            serviceCollection.AddTransient<IExpressionParser, ExpressionParserService>();
+            serviceCollection.AddTransient<IDelimetersParser, DelimeterParserService>();
+
+            this._services = serviceCollection.BuildServiceProvider();
+        }
 
         [SetUp]
         public void Setup()
         {
-            this._calculator = new StringCalculatorService();
+            this._calculator = this._services.GetRequiredService<IStringCalculator>();
         }
 
         [Test]

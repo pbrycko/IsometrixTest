@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using IsometrixTest.StringCalculator.Services;
 
 namespace IsometrixTest.StringCalculator
 {
@@ -6,7 +8,14 @@ namespace IsometrixTest.StringCalculator
     {
         static void Main(string[] args)
         {
-            IStringCalculator stringCalculator = new StringCalculatorService();
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IStringCalculator, StringCalculatorService>();
+            serviceCollection.AddTransient<INumbersParser, NumbersParserService>();
+            serviceCollection.AddTransient<IExpressionParser, ExpressionParserService>();
+            serviceCollection.AddTransient<IDelimetersParser, DelimeterParserService>();
+
+            IServiceProvider services = serviceCollection.BuildServiceProvider();
+            IStringCalculator stringCalculator = services.GetRequiredService<IStringCalculator>();
 
             for (; ; )
             {
